@@ -16,7 +16,7 @@ ansible-galaxy install Dell-Networking.dellos-xstp
 Requirements
 ------------
 
-This role requires an SSH connection for connectivity to your Dell EMC Networking OS device. You can use any of the built-in dellos connection variables, or the ``provider``
+This role requires an SSH connection for connectivity to your Dell EMC Networking device. You can use any of the built-in dellos connection variables, or the ``provider``
 dictionary.
 
 Role Variables
@@ -26,23 +26,23 @@ Role Variables
 The hostname is the value of the variable ``hostname`` that corresponds to the name of the OS device.
 This role is abstracted using the variable ``ansible_net_os_name`` that can take the following values: dellos6, dellos9 and dellos10.
 
-Any role variable with corresponding state variable setting to *absent* negates the configuration of that variable. 
-For variables with no state variable, setting empty value to the variable negates the corresponding configuration.
-The variables and its values are **case-sensitive**.
+Any role variable with a corresponding state variable set to absent negates the configuration of that variable. 
+For variables with no state variable, setting an empty value to the variable negates the corresponding configuration.
+The variables and its values are case-sensitive.
 
-**hostname** (dictionary) contains the following keys:
+hostname contains the following keys:
 
 |       Key | Type                      | Notes                                                                                                                                                                                     |
 |------------|---------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | type       | string(required) | Configures type of spanning tree mode specified that can vary according the OS device. For OS9 devices: stp, rstp, pvst, mstp. For OS6 and OS10 devices: rstp, rapid-pvst, mst. |
-| pvst_vlans  | integer             | Configure VLAN/range of VLANs for the type of spanning tree protocol OS6: 1-4093, OS10: 1-4094. |
+| pvst_vlans  | integer             | Configures VLAN/range of VLANs for the type of spanning tree protocol-- OS6: 1-4093; OS10: 1-4094. |
 | bridge_priority | integer | Configures bridge-priority for the spanning tree. You can specify a value in the range 0-61440 in multiples of 4096. |
-| mstp_instances | list | This key contains objects to configure MSTP instance. See the following mstp_instances.* keys for each list item. |
+| mstp_instances | list | Contains objects to configure MSTP instance. See the following mstp_instances.* keys for each list item. |
 | mstp_instances.number     | integer                   | Specifies the number of the spanning tree instance. |
-| mstp_instances.vlans      | string     | Configures VLAN/range of VLANs my mapping it to the instance number. |
+| mstp_instances.vlans      | string     | Configures VLAN/range of VLANs by mapping it to the instance number. |
 | mstp_instances.bridge_priority | integer | Configures bridge-priority for the spanning tree. You can specify any value in the range 0-61440 in multiples of 4096.|
-| mstp_instances.vlans_state | string, Choices: absent, present* | This key with value "absent" deletes the set of VLANs mapped to the spanning tree instance. | 
-| xstp_state | string, Choices: absent, present* | This key with the setting *absent* deletes the configured type of STP. |
+| mstp_instances.vlans_state | string, choices: absent, present* | Configuring this key to absent deletes the set of VLANs mapped to the spanning tree instance. | 
+| xstp_state | string, choices: absent, present* | Configuring this key to absent deletes the configured type of STP. |
 
 ```
 Note: Asterisk (*) denotes the default value if none is specified.
@@ -51,19 +51,19 @@ Note: Asterisk (*) denotes the default value if none is specified.
 Connection Variables
 --------------------
 
-Ansible Dell EMC Networking OS roles require the following connection information to establish communication with the nodes in your inventory. This information can exist in
+Ansible Dell EMC Networking roles require the following connection information to establish communication with the nodes in your inventory. This information can exist in
 the Ansible group_vars or host_vars directories, or in the playbook itself.
 
 |         Key | Required | Choices    | Description                              |
 | ----------- | -------- | ---------- | ---------------------------------------- |
-|        host | yes      |            | The host name or address for connecting to the remote device over the specified *transport*. The value of *host* is used as the destination address for the transport. |
-|        port | no       |            | The port to use when building the connection to the remote device. This value applies to either acceptable value of *transport*. The port value defaults to the appropriate transport common port if the task provides none (CLI=22, HTTP=80, HTTPS=443). |
-|    username | no       |            | Configures the username to use to authenticate the connection to the remote device.  The value of *username* authenticates the CLI login. If the task does not specify the value, the value of environment variable ANSIBLE_NET_USERNAME is used instead. |
-|    password | no       |            | Specifies the password to use to authenticate the connection to the remote device. This is a common argument used for the acceptable value of *transport*. If the task does not specify the value, the value of environment variable ANSIBLE_NET_PASSWORD is used instead. |
-|   authorize | no       | yes, no*   | Instructs the module to enter privileged mode on the remote device before sending any commands. If not specified, the device attempt to execute all commands in non-privileged mode. If the task does not specify the value, the value of environment variable ANSIBLE_NET_AUTHORIZE is used instead. |
-|   auth_pass | no       |            | Specifies the password to use if required to enter privileged mode on the remote device. If *authorize=no*, then this argument does nothing. If the task does not specify the value, the value of environment variable ANSIBLE_NET_AUTH_PASS is used instead. |
-|   transport | yes      | cli*       | Configures the transport connection to use when connecting to the remote device. The *transport* argument supports connectivity to the device over CLI (SSH).  |
-|    provider | no       |            | Convenient method that passes all the above connection arguments as a dict object. All constraints (required, choices, etc.) must be met either by individual arguments or values in this dict. |
+|        host | yes      |            | Hostname or address for connecting to the remote device over the specified ``transport``. The value of this key is used as the destination address for the transport. |
+|        port | no       |            | Port to use when building the connection to the remote device. This key  applies to either acceptable value of ``transport``. This key defaults to the appropriate transport common port if the key provides none (CLI=22, HTTP=80, HTTPS=443). |
+|    username | no       |            | Configures the username to use to authenticate the connection to the remote device. The value of this key authenticates the CLI login. If this key does not specify the value, the value of environment variable ANSIBLE_NET_USERNAME is used instead. |
+|    password | no       |            | Specifies the password to use to authenticate the connection to the remote device. This is a common argument used for the acceptable value of ``transport``. If this key does not specify the value, the value of environment variable ANSIBLE_NET_PASSWORD is used instead. |
+|   authorize | no       | yes, no*   | Instructs the module to enter privileged mode on the remote device before sending any commands. If the task does not specify the value, the value of environment variable ANSIBLE_NET_AUTH_PASS is used instead. If not specified, the device attempts to execute all commands in non-privileged mode. |
+|   auth_pass | no       |            | Specifies the password to use if required to enter privileged mode on the remote device. If ``authorize`` is set to no, then this key is not applicable. If this key does not specify the value, the value of environment variable ANSIBLE_NET_AUTH_PASS is used instead. |
+|   transport | yes      | cli*       | Configures the transport connection to use when connecting to the remote device. This key supports connectivity to the device over CLI (SSH).  |
+|    provider | no       |            | Convenient method that passes all the above connection arguments as a dictionary object. All constraints (such as required or choices) must be met either by individual arguments or values in this dictionary. |
 
 ```
 Note: Asterisk (*) denotes the default value if none is specified.
@@ -87,8 +87,7 @@ By including the role, you automatically get access to all of the tasks to confi
 
 Sample hosts file:
 
-    [spine]
-    spine1
+    spine1 ansible_host= <ip_address> ansible_net_os_name= <OS name(dellos9/dellos6/dellos10)>
 
 Sample ``host_vars/spine1``:
     
@@ -116,7 +115,7 @@ Sample ``vars/main.yml``:
         xstp_state: present
 
 
-A simple playbook to setup system, ``spine.yml``:
+Simple playbook to setup system, ``spine.yml``:
 
     - hosts: spine
       roles:
