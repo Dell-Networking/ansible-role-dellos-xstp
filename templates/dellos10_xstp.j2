@@ -26,18 +26,18 @@ no spanning-tree mode {{ xstp_vars.type }}
 spanning-tree mode {{ xstp_vars.type }}
     {% if xstp_vars.type == "rstp" %}
       {% if xstp_vars.bridge_priority is defined and xstp_vars.bridge_priority %}
- spanning-tree {{ xstp_vars.type }} priority {{ xstp_vars.bridge_priority }}
+spanning-tree {{ xstp_vars.type }} priority {{ xstp_vars.bridge_priority }}
       {% else %}
- no spanning-tree {{ xstp_vars.type }} priority
+no spanning-tree {{ xstp_vars.type }} priority
       {% endif %}
     {% endif %}
 
     {% if xstp_vars.type == "rapid-pvst" %}
       {% if xstp_vars.pvst_vlans is defined and xstp_vars.pvst_vlans %}
         {% if xstp_vars.bridge_priority is defined and xstp_vars.bridge_priority %}
- spanning-tree vlan {{ xstp_vars.pvst_vlans }} priority {{ xstp_vars.bridge_priority }}
+spanning-tree vlan {{ xstp_vars.pvst_vlans }} priority {{ xstp_vars.bridge_priority }}
         {% else %}
- no spanning-tree vlan {{ xstp_vars.pvst_vlans }} priority
+no spanning-tree vlan {{ xstp_vars.pvst_vlans }} priority
         {% endif %}
       {% endif %}
     {% endif %}

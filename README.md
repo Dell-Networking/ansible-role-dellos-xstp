@@ -126,6 +126,10 @@ Then run with:
     ansible-playbook -i hosts spine.yml
 
 
+Contact
+--------
+Send general comments and feedback to: feedback-ansible-dell-networking@dell.com
+
 License
 --------
 

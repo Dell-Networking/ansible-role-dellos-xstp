@@ -32,22 +32,18 @@ no spanning-tree priority
       {% endif %}
     {% endif %}
     {% if xstp_vars.type == "rapid-pvst" or xstp_vars.type == "pvst" %}
-    {% set values = xstp_vars.pvst_vlans.split(",") %}
-      {% for val in values %}
-        {% if xstp_vars.pvst_vlans is defined and xstp_vars.pvst_vlans %}
+      {% if xstp_vars.pvst_vlans is defined and xstp_vars.pvst_vlans %}
+        {% set values = (xstp_vars.pvst_vlans|string).split(",") %}
+        {% for val in values %}
           {% if xstp_vars.bridge_priority is defined %}
             {% if xstp_vars.bridge_priority %}
 spanning-tree vlan {{ val }} priority {{ xstp_vars.bridge_priority }}
             {% else %}
 no spanning-tree vlan {{ val }} priority
             {% endif %}
-          {% else %}
-spanning-tree vlan {{ val }}
           {% endif %}
-        {% else %}
-no spanning-tree vlan {{ val }}
-        {% endif %}
-      {% endfor %}
+        {% endfor %}
+      {% endif %}
     {% endif %}
     {% if xstp_vars.type == "mst" %}
       {% if xstp_vars.mstp_instances is defined and xstp_vars.mstp_instances %}
@@ -58,18 +54,18 @@ spanning-tree mst {{ instance.number }} priority {{ instance.bridge_priority }}
             {% else %}
 no spanning-tree mst {{ instance.number }} priority
             {% endif %}
-            {% set values = instance.vlans.split(",") %}
-            {% for val in values %}
-              {% if instance.vlans is defined and instance.vlans %}
 spanning-tree {{ xstp_vars.type }} configuration
-                {% if instance.vlans_state is defined and instance.vlans_state=="absent" %}
+            {% if instance.vlans is defined and instance.vlans %}
+            {% set values = (instance.vlans|string).split(",") %}
+                {% for val in values %}
+                  {% if instance.vlans_state is defined and instance.vlans_state=="absent" %}
 instance {{ instance.number }} remove vlan {{ val }}
-                {% else %}
+                  {% else %}
 instance {{ instance.number }} add vlan {{ val }}
-                {% endif %}
+                  {% endif %}
+                {% endfor %}
 exit
-              {% endif %}
-            {% endfor %}
+            {% endif %}
           {% endif %}
         {% endfor %}
       {% endif %}
