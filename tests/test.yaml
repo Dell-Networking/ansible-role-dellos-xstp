@@ -2,4 +2,4 @@
 - hosts: datacenter
   connection: local
   roles:
-    - dellos-xstp
+    - Dell-Networking.dellos-system

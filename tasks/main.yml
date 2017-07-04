@@ -1,6 +1,6 @@
 ---
 # tasks file for Dell-Networking.dellos-xstp
-- name: "Provision xSTP configuration for OS9"
+- name: "Provisioning xSTP configuration for dellos9"
   dellos9_config:
     src: dellos9_xstp.j2
     provider: "{{ cli }}"
@@ -8,7 +8,7 @@
 #  notify: save config os9
   register: output
 
-- name: "Provision xSTP configuration for OS10"
+- name: "Provisioning xSTP configuration for dellos10"
   dellos10_config:
     src: dellos10_xstp.j2
     provider: "{{ cli }}"
@@ -16,7 +16,7 @@
 #   notify: save config os10
   register: output
 
-- name: "Provision xSTP configuration for OS6"
+- name: "Provisioning xSTP configuration for dellos6"
   dellos6_config:
     src: dellos6_xstp.j2
     provider: "{{ cli }}"

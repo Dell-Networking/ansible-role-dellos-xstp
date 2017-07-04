@@ -1,11 +1,8 @@
 #jinja2: trim_blocks: True,lstrip_blocks: True
-{################################
-PURPOSE: Configure xSTP 
+{##################################################
+PURPOSE: Configure xSTP commands for dellos6 devices 
 
-################################
-Example:
 dellos_xstp:
-  OS6:
     type: stp
     enable: true
     stp:
@@ -25,9 +22,9 @@ dellos_xstp:
       - name: Te1/1/8
         edgeport: present
 
-################################}
-{% if (dellos_xstp is defined and dellos_xstp) and (hostname in dellos_xstp) %}
-{% set xstp_vars = dellos_xstp[hostname] %}
+#####################################################}
+{% if dellos_xstp is defined and dellos_xstp %}
+{% set xstp_vars = dellos_xstp %}
 {% if xstp_vars.type is defined and xstp_vars.type %}
   {% if xstp_vars.enable is defined %}
     {% if xstp_vars.enable %}

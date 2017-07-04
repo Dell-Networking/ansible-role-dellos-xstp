@@ -1,11 +1,8 @@
 #jinja2: trim_blocks: True, lstrip_blocks: True
 {#############################################
-PURPOSE: Configure xSTP on OS9 Devices
+PURPOSE: Configure xSTP commands for dellos9 Devices
 
-##############################################
-Example:
 dellos_xstp:
-  OS9:
     type: stp
     enable: true
     stp:
@@ -37,8 +34,8 @@ dellos_xstp:
         edgeport: present
 
 ############################################}
-{% if (dellos_xstp is defined and dellos_xstp) and (hostname in dellos_xstp) %}
-{% set xstp_vars = dellos_xstp[hostname] %}
+{% if dellos_xstp is defined and dellos_xstp %}
+{% set xstp_vars = dellos_xstp %}
 {% if xstp_vars.type is defined and xstp_vars.type %}
   {% if xstp_vars.type == "stp" %}
 protocol spanning-tree 0

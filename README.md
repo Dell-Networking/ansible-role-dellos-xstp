@@ -2,7 +2,7 @@ xSTP Role for Dell EMC Networking OS
 ====================================
 
 This role facilitates the configuration of xSTP attributes. It supports multiple version of Spanning Tree Protocol (STP): Rapid Spanning Tree (RSTP), Multiple Spanning Tree (MST), and Per-VLAN Spanning Tree (PVST).
-It supports the configuration of bridge priority, enabling and disabling spanning tree, creating and deleting instances, and mapping virtual LAN (VLAN) to instances. This role is abstracted for OS9, OS6 and OS10 devices.
+It supports the configuration of bridge priority, enabling and disabling spanning tree, creating and deleting instances, and mapping virtual LAN (VLAN) to instances. This role is abstracted for dellos9, dellos6 and dellos10.
 
 
 Installation
@@ -15,20 +15,18 @@ ansible-galaxy install Dell-Networking.dellos-xstp
 Requirements
 ------------
 
-This role requires an SSH connection for connectivity to your Dell EMC Networking device. You can use any of the built-in dellos connection variables, or the ``provider``
-dictionary.
+This role requires an SSH connection for connectivity to your Dell EMC Networking device. You can use any of the built-in dellos connection variables, or the ``provider`` dictionary.
 
 Role Variables
 --------------
 
-``dellos_xstp``(dictionary) contains the hostname (dictionary). 
-The hostname is the value of the variable ``hostname`` that corresponds to the name of the OS device. This role is abstracted using the variable ``ansible_net_os_name`` that can take the following values: dellos9, dellos6 and dellos10.
+This role is abstracted using the variable ``ansible_net_os_name`` that can take the following values: dellos9, dellos6 and dellos10.
 
 Any role variable with a corresponding state variable set to absent negates the configuration of that variable. 
 For variables with no state variable, setting an empty value to the variable negates the corresponding configuration.
 The variables and its values are case-sensitive.
 
-``hostname`` contains the following keys:
+``dellos_xstp`` contains the following keys:
 
 |       Key | Type                      | Notes                                                                                                                                                                                     |
 |------------|---------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
@@ -54,7 +52,7 @@ The variables and its values are case-sensitive.
 | mstp.state | string, choices: absent, present* | If set to absent, deletes the configured MSTP. |                     
 | intf | list | Configures multiple spanning tree in interface. See the following intf.* keys for each list item. |
 | intf.name | string (required)        | Configures spanning tree in the interface with this interface name. |
-| stp_type | list | Configures the list of spanning tree in interface. This key is supported only in OS9. |
+| stp_type | list | Configures the list of spanning tree in interface. This key is supported only in dellos9. |
 | intf.edgeport | string, choices: present,bpduguard   | Configures the edgeport at the interface spanning tree. If the value is "bpduguard", enables bpduguard at edgeport.                                                        |
 
 ```
@@ -93,8 +91,7 @@ Example Playbook
 ----------------
 The following example uses the dellos.dellos-xstp role to configure different variants of spanning tree. 
 Based on the type of STP and defined objects, the VLANs are associated and bridge priorities are assigned.
-This example creates a ``hosts`` file with the switch details, a ``host_vars`` file with connection variables. The corresponding 
-role variables are defined in the ``vars/main.yaml`` file at the role path.
+The example creates a ``hosts`` file with the switch details and corresponding variables. The hosts file should define the variable `` ansible_net_os_name `` with corresponding Dell EMC networking OS name.
 This example writes a simple playbook that only references the dellos-xstp role. 
 
 Sample hosts file:
@@ -113,10 +110,7 @@ Sample ``host_vars/spine1``:
       auth_pass: xxxxx
       transport: cli
 
-Sample ``vars/main.yaml``:
-
     dellos_xstp:
-      spine1:
         type: rstp
         enable: true
         stp:
