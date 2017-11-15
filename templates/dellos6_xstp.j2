@@ -19,8 +19,8 @@ dellos_xstp:
           vlans_state: present
           bridge_priority: 4096
     intf:
-      - name: Te1/1/8
-        edgeport: present
+      Te 1/1/8:
+        edge_port: present
 
 #####################################################}
 {% if dellos_xstp is defined and dellos_xstp %}
@@ -113,18 +113,17 @@ exit
     {% endif %}
 {% endif %}
 {% if xstp_vars.intf is defined and xstp_vars.intf %}
-  {% for intf in xstp_vars.intf %}
-    {% if intf.name is defined and intf.name %}
-      {% if intf.edgeport is defined %}
-interface {{ intf.name }}
-        {% if intf.edgeport == "absent" or not intf.edgeport %}
+  {% for intr in xstp_vars.intf.keys() %}
+    {% set intf_vars = xstp_vars.intf[intr] %}
+interface {{ intr }}
+      {% if intf_vars.edge_port is defined %}
+        {% if not intf_vars.edge_port %}
 no spanning-tree portfast
         {% else %}
 spanning-tree portfast
         {% endif %}
 exit
       {% endif %}
-    {% endif %}
   {% endfor %}
 {% endif %}
 {% endif %}

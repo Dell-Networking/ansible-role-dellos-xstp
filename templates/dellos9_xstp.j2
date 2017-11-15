@@ -27,11 +27,11 @@ dellos_xstp:
           bridge_priority: 4096
       state: present
     intf:
-      - name: ethernet1/1/8
+      fortyGigE 1/1:
         stp_type:
           - rstp
           - mstp
-        edgeport: present
+        edge_port: true
 
 ############################################}
 {% if dellos_xstp is defined and dellos_xstp %}
@@ -135,31 +135,28 @@ protocol spanning-tree mstp
 {% endif %}
 
 {% if xstp_vars.intf is defined and xstp_vars.intf %}
-  {% for intf in xstp_vars.intf %}
-    {% if intf.name is defined and intf.name %}
-interface {{ intf.name }}
-      {% for type in intf.stp_type %}
+  {% for intr in xstp_vars.intf.keys() %}
+    {% set intf_vars = xstp_vars.intf[intr] %}
+interface {{ intr }}
+      {% for type in intf_vars.stp_type %}
         {% if type == "stp" %}
-          {% if intf.edgeport is defined %}
-            {% if intf.edgeport == "absent" or not intf.edgeport %}
+          {% if intf.edge_port is defined %}
+            {% if not intf.edge_port %}
  no spanning-tree 0 portfast
             {% else %}
  spanning-tree 0 portfast bpduguard
             {% endif %}
           {% endif %}
         {% else %}
-          {% if intf.edgeport is defined %}
-            {% if intf.edgeport == "present" %}
+          {% if intf_vars.edge_port is defined %}
+            {% if intf_vars.edge_port %}
  spanning-tree {{ type }} edge-port
-            {% elif intf.edgeport == "absent" or not intf.edgeport %}
- no spanning-tree {{ type }} edge-port
             {% else %}
- spanning-tree {{ type }} edge-port {{ intf.edgeport }}
+ no spanning-tree {{ type }} edge-port
             {% endif %}
           {% endif %}
         {% endif %}
       {% endfor %}
-    {% endif %}
   {% endfor %}
 {% endif %}
 {% endif %}
