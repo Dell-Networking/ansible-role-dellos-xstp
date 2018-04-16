@@ -108,8 +108,8 @@ Ansible Dell EMC Networking roles require connection information to establish co
 | ``port``        | no       |            | Specifies the port used to build the connection to the remote device; if unspecified, the value defaults to 22 |
 | ``username`` | no       |            | Configures the username to use to authenticate the CLI login for the connection to the remote device; if value is unspecified, the ANSIBLE_NET_USERNAME environment variable value is used |
 | ``password`` | no       |            | Specifies the password to use to authenticate the connection to the remote device (acceptable value of *transport*); if value is unspecified, the ANSIBLE_NET_PASSWORD environment variable value is used |
-| ``authorize`` | no       | yes, no\*   | Instructs the module to enter privileged mode on the remote device before sending any commands; if value is unspecified, the ANSIBLE_NET_AUTH_PASS environment variable value is used and the device attempts to execute all commands in non-privileged mode |
-| ``auth_pass`` | no       |            | Specifies the password to use if required to enter privileged mode on the remote device; if *authorize* is set to no, this key is not applicable; if value is unspecified, the ANSIBLE_NET_AUTH_PASS environment variable value is used |
+| ``authorize`` | no       | yes, no\*   | Instructs the module to enter privileged mode on the remote device before sending any commands; if value is unspecified, the ANSIBLE_NET_AUTH_PASS environment variable value is used and the device attempts to execute all commands in non-privileged mode . This key is supported only in dellos9 and dellos6. |
+| ``auth_pass`` | no       |            | Specifies the password to use if required to enter privileged mode on the remote device; if *authorize* is set to no, this key is not applicable; if value is unspecified, the ANSIBLE_NET_AUTH_PASS environment variable value is used . This key is supported only in dellos9 and dellos6. |
 | ``provider`` | no       |            | Convenient method that passes all the above connection arguments as a dictionary object; all constraints (such as required or choices) must be met either by individual arguments or values in this dictionary|
 
 > **NOTE**: Asterisk (\*) denotes the default value if none is specified.
@@ -138,6 +138,7 @@ This example writes a simple playbook that only references the *dellos-xstp* rol
       password: xxxxx
       authorize: yes
       auth_pass: xxxxx
+    build_dir: ../temp/dellos9
 
 **Sample vars/main.yml**
 
