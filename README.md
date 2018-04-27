@@ -139,7 +139,6 @@ It writes a simple playbook that only references the *dellos-xstp* role. By incl
     ansible_network_os: dellos9
     build_dir: ../temp/dellos9
 
-
 **Sample vars/main.yml**
 
      dellos_xstp:
