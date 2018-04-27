@@ -140,8 +140,8 @@ protocol spanning-tree mstp
 interface {{ intr }}
       {% for type in intf_vars.stp_type %}
         {% if type == "stp" %}
-          {% if intf.edge_port is defined %}
-            {% if not intf.edge_port %}
+          {% if intf_vars.edge_port is defined %}
+            {% if not intf_vars.edge_port %}
  no spanning-tree 0 portfast
             {% else %}
  spanning-tree 0 portfast bpduguard
