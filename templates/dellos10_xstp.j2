@@ -5,7 +5,6 @@ PURPOSE: Configure xSTP commands for dellos10 devices
 dellos_xstp:
     type: rstp
     enable: true
-    path_cost: true
     mac_flush_timer: 4    
     rstp:
       max_age: 6
@@ -76,13 +75,6 @@ no spanning-tree mode r
 no spanning-tree disable
   {% else %}
 spanning-tree disable
-  {% endif %}
-{% endif %}
-{% if xstp_vars.path_cost is defined %}
-  {% if xstp_vars.path_cost %}
-spanning-tree pathcost dynamic
-  {% else %}
-no spanning-tree pathcost dynamic
   {% endif %}
 {% endif %}
 {% if xstp_vars.mac_flush_timer is defined %}

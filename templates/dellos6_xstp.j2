@@ -20,7 +20,7 @@ dellos_xstp:
           bridge_priority: 4096
     intf:
       Te 1/1/8:
-        edge_port: present
+        edge_port: true
 
 #####################################################}
 {% if dellos_xstp is defined and dellos_xstp %}
@@ -59,18 +59,18 @@ no spanning-tree priority
           {% else %}
           {% set vlans = (vlan.range_or_id|string).split(",")  %}
           {% endif %}
-          {% for vlanid in vlans %}         
-            {% if vlan.state is defined and vlan.state %}
-no spanning-tree vlan {{ vlanid}}
+          {% for vlanid in vlans %}        
+            {% if vlan.state is defined and vlan.state == "absent" %}
+              {% if vlan.bridge_priority is defined %}
+                {% if not vlan.bridge_priority %}
+no spanning-tree vlan {{ vlanid}} priority
+                {% endif %}
+              {% endif %}
             {% else %}
               {% if vlan.bridge_priority is defined %}
                 {% if vlan.bridge_priority == 0 or vlan.bridge_priority %}
 spanning-tree vlan {{ vlanid }} priority {{ vlan.bridge_priority }}
-                {% else %}
-no spanning-tree vlan {{ vlanid }} priority
                 {% endif %}
-              {% else %}
-spanning-tree vlan {{ vlanid }}
               {% endif %}
             {% endif %}
           {% endfor %}
@@ -106,10 +106,10 @@ instance {{ instance.number }} remove vlan {{ vlan }}
 instance {{ instance.number }} add vlan {{ vlan }}
               {% endif %}
             {% endfor %}
-exit
           {% endif %}
         {% endif %}
       {% endfor %}
+exit
     {% endif %}
 {% endif %}
 {% if xstp_vars.intf is defined and xstp_vars.intf %}
