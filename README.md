@@ -14,7 +14,7 @@ Role variables
 
 - *dellos_xstp*(dictionary) contains the hostname (dictionary)
 - Hostname is the value of the *hostname* variable that corresponds to the name of the OS device
-- Role is abstracted using the *ansible_network_os*/ *ansible_net_os_name* variable that can take dellos6, dellos9, and dellos10 values
+- Role is abstracted using the *ansible_network_os* variable that can take dellos6, dellos9, and dellos10 values
 - Any role variable with a corresponding state variable set to absent negates the configuration of that variable
 - Setting an empty value to any variable negates the corresponding configuration
 - Variables and values are case-sensitive
@@ -126,7 +126,7 @@ It writes a simple playbook that only references the *dellos-xstp* role. By incl
 
 **Sample hosts file**
 
-    spine1 ansible_host= <ip_address> ansible_net_os_name= <OS name(dellos9/dellos6/dellos10)>
+    spine1 ansible_host= <ip_address>
 
 **Sample host_vars/spine1**
     
