@@ -1,6 +1,5 @@
 ---
 # vars file for Dell-Networking.dellos-xstp, below gives a sample configuration
-
 # Sample variables for dellos9 device
 dellos_xstp:
     type: rstp
@@ -124,5 +123,3 @@ dellos_xstp:
       mstp_instances:
         - number_or_range: 1
           root: secondary
-
-
