@@ -1,7 +1,6 @@
 #jinja2: trim_blocks: True, lstrip_blocks: True
 {###############################################
 PURPOSE: Configure xSTP commands for dellos10 devices
-
 dellos_xstp:
     type: rstp
     enable: true
@@ -60,7 +59,6 @@ dellos_xstp:
             priority: 16
             cost: 8
 #################################################}
-
 {% if dellos_xstp is defined and dellos_xstp %}
 {% set xstp_vars = dellos_xstp %}
 {% if xstp_vars.type is defined %}

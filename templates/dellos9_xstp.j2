@@ -1,7 +1,6 @@
 #jinja2: trim_blocks: True, lstrip_blocks: True
 {#############################################
 PURPOSE: Configure xSTP commands for dellos9 Devices
-
 dellos_xstp:
     type: stp
     enable: true
@@ -32,7 +31,6 @@ dellos_xstp:
           - rstp
           - mstp
         edge_port: true
-
 ############################################}
 {% if dellos_xstp is defined and dellos_xstp %}
 {% set xstp_vars = dellos_xstp %}
