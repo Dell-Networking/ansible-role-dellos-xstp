@@ -1,6 +1,7 @@
 ---
 # vars file for Dell-Networking.dellos-xstp, below gives a sample configuration
 # Sample variables for dellos10 device
+
 dellos_xstp:
     type: rstp
     enable: true
