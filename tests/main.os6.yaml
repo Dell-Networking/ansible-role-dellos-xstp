@@ -1,0 +1,21 @@
+---
+# vars file for Dell-Networking.dellos-xstp, below gives a sample configuration
+# Sample variables for dellos6 device
+dellos_xstp:
+    type: stp
+    enable: true
+    stp:
+      bridge_priority: 4096
+    pvst:
+      vlan:
+        - range_or_id: 10
+          bridge_priority: 4096
+    mstp:
+      mstp_instances:
+        - number: 1
+          vlans: 10,12
+          bridge_priority: 4096
+          vlans_state: present
+    intf:
+      Gi1/0/5:
+        edge_port: true
