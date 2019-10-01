@@ -9,7 +9,7 @@ galaxy_info:
 
   platforms:
   - name: DellOS
-    version: 10
+
 
   galaxy_tags:
     - networking
