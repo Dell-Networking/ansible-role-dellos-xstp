@@ -8,15 +8,15 @@ galaxy_info:
   min_ansible_version: 2.2
 
   platforms:
-  - name: dell os6
-  - name: dell os9
-  - name: dell os10
+  - name: dellos6
+  - name: dellos9
+  - name: dellos10
 
   galaxy_tags:
     - networking
     - dell 
     - dellemc
     - emc
-    - os9
-    - os6
-    - os10
+    - dellos9
+    - dellos6
+    - dellos10
