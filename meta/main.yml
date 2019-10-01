@@ -7,11 +7,6 @@ galaxy_info:
   license:  Apache 2.0
   min_ansible_version: 2.2
 
-  platforms:
-  - name: dellos6
-  - name: dellos9
-  - name: dellos10
-
   galaxy_tags:
     - networking
     - dell 
