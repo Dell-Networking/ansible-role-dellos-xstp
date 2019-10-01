@@ -26,7 +26,7 @@ dellos_xstp:
           vlans_state: present
       state: present
     intf:
-      fortyGigE 1/25
+      fortyGigE 1/25:
         stp_type:
           - stp
           - mstp
@@ -49,7 +49,7 @@ dellos_xstp:
           bridge_priority: 4096
           vlans_state: present
     intf:
-      name: Gi1/0/5
+      Gi1/0/5:
         edge_port: true
 
 # Sample variables for dellos10 device
